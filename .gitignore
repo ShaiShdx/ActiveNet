@@ -1,0 +1,23 @@
+####### Python #######
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg-info
+*.egg
+*.ipynb
+
+.DS_Store
+.mypy_cache
+.vscode
+
+*.txt
+*.md
+*.yaml
+*.toml
+
+/acnet_results
+
+# Cache
+.cache/
