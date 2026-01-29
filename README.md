@@ -21,25 +21,32 @@ pip install numpy scipy matplotlib networkx (torch torchvision)
 
 ```
 .
-├── setup.py                  # Installs the dependencies
-├── examples.py               # requirements: dependencies
-├── README.md                 # README
-├── BUILD_GUIDE.md            # Usage examples
+├── setup.py                      # Installs the dependencies
+├── examples.py                   # requirements: dependencies
+├── README.md                     # README
+├── BUILD_GUIDE.md                # Usage examples
 │
-├──────────────────────── BODY OF THE CODE ──────────────────────────
+├────────────────────────── MINI VERSION CODE ───────────────────────────
 │
-├── main.py                   # Main entry point
-├── main_cuda.py              # Main entry point for CUDA
-├── examples.py               # Usage examples
+├── actnet_mini/                  # A mini version of the code
+│   ├── active_contraction.py     # Plotting functions    
+│   ├── shape_conversion.py       # Physics and time evolution with CUDA
+│   └── benchmark_torch.py        # Helper utilities with CUDA
+│
+├────────────────────────── BODY OF THE CODE ────────────────────────────
+│
+├── main.py                       # Main entry point
+├── main_cuda.py                  # Main entry point for CUDA
+├── examples.py                   # Usage examples
 │
 └── AN_utils/
-    ├── config.py             # Configuration management (dataclasses)
-    ├── network.py            # Network generation and topology
-    ├── simulation.py         # Physics and time evolution
-    ├── helpers.py            # Helper utilities
-    ├── visualization.py      # Plotting functions    
-    ├── simulation_cuda.py    # Physics and time evolution with CUDA
-    └── helpers_cuda.py       # Helper utilities with CUDA
+    ├── config.py                 # Configuration management (dataclasses)
+    ├── network.py                # Network generation and topology
+    ├── simulation.py             # Physics and time evolution
+    ├── helpers.py                # Helper utilities
+    ├── visualization.py          # Plotting functions    
+    ├── simulation_cuda.py        # Physics and time evolution with CUDA
+    └── helpers_cuda.py           # Helper utilities with CUDA
 
 ```
 # Build System Guide
