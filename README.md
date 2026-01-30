@@ -20,10 +20,11 @@ pip install numpy scipy matplotlib networkx (torch torchvision)
 ## Structure
 
 ```
-.
+./
 ├── setup.py                      # Installs the dependencies
 ├── examples.py                   # requirements: dependencies
 ├── README.md                     # README
+├── LICENSE                       # MIT LICENSE
 ├── BUILD_GUIDE.md                # Usage examples
 │
 ├────────────────────────── MINI VERSION CODE ───────────────────────────
