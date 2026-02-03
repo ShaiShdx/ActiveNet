@@ -19,6 +19,8 @@ Example usage:
 import logging
 import numpy as np
 import argparse
+import time
+import matplotlib.pyplot as plt
 
 from AN_utils.config import Config
 from AN_utils.network import FilamentNetwork
@@ -125,6 +127,8 @@ def run_simulation(config=None, use_cuda=True):
                 )
                 visualizer.plot_rods(temp_state, tt, plot_radius=False)
 
+            plt.show()
+
         callback = cuda_callback
 
         # Plot initial state
@@ -172,4 +176,8 @@ def main():
 
 
 if __name__ == "__main__":
+    ti = time.time()
+
     sim, network = main()
+
+    print("\n TOTAL TIME = ", time.time() - ti)

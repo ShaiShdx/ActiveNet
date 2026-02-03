@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class SimulationConfig:
     """Core simulation parameters"""
 
-    T_tot: float = 100.0
+    T_tot: float = 1.0
     dt: float = 0.01
     N_frame: int = 20
     seed: int = 20
@@ -29,7 +29,7 @@ class SimulationConfig:
 class NetworkConfig:
     """Network geometry and topology parameters"""
 
-    XY_lens: list = field(default_factory=lambda: [30, 30])
+    XY_lens: list = field(default_factory=lambda: [10, 10])
     dens0: float = 1.0
     xi: float = 1.5  # len_avg * sqrt(dens)
     unit_cell: str = "square"
@@ -119,7 +119,7 @@ class PhysicsConfig:
 
     # Rearrangement
     rearr: bool = True
-    T_rearr: float = 1.0
+    T_rearr: float = 0.1
 
     def __post_init__(self):
         logger.info(
@@ -131,7 +131,7 @@ class PhysicsConfig:
 class VisualizationConfig:
     """Plotting and output settings"""
 
-    plot_img: bool = True
+    plot_img: bool = False
     save_img: bool = False
     read_img: bool = False
 

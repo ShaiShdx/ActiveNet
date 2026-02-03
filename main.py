@@ -18,6 +18,8 @@ Example usage:
 
 import logging
 import numpy as np
+import time
+import matplotlib.pyplot as plt
 
 from AN_utils.config import Config
 from AN_utils.network import FilamentNetwork
@@ -142,4 +144,8 @@ def main():
 
 
 if __name__ == "__main__":
+    ti = time.time()
+
     sim, network = main()
+
+    print("\n TOTAL TIME = ", time.time() - ti)

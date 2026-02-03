@@ -30,13 +30,20 @@ class DeviceManager:
         """
         self.torch_available = TORCH_AVAILABLE
         self.device = self._setup_device(use_cuda)
+
         self.using_cuda = self.device.type == "cuda" if self.torch_available else False
+        self.using_mps = self.device.type == "mps" if self.torch_available else False
+
+        logger.info(f"************** USING Device: {self.device} **************")
+        logger.info(f"************** MPS_USE ??? {self.using_mps} **************")
 
         if self.using_cuda:
             logger.info(f"Using CUDA device: {torch.cuda.get_device_name(0)}")
             logger.info(
                 f"CUDA memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.2f} GB"
             )
+        elif self.using_mps:
+            logger.info("Using MPS device")
         elif self.torch_available:
             logger.info("Using CPU (CUDA not available)")
         else:
@@ -49,6 +56,10 @@ class DeviceManager:
 
         if use_cuda and torch.cuda.is_available():
             device = torch.device("cuda")
+            logger.info("Running on CUDA")
+        elif torch.backends.mps.is_available():
+            device = torch.device("mps")
+            logger.info("Running on MPS")
         else:
             device = torch.device("cpu")
 
@@ -71,9 +82,20 @@ class DeviceManager:
         if isinstance(array, torch.Tensor):
             return array.to(self.device)
 
-        # Use float32 for GPU (faster), float64 for CPU (precision)
+        # # Use float32 for GPU (faster), float64 for CPU (precision)
+        # if dtype is None:
+        #     dtype = (
+        #         torch.float32 if self.using_cuda or self.using_mps else torch.float64
+        #     )
+
         if dtype is None:
-            dtype = torch.float32 if self.using_cuda else torch.float64
+            dtype = (
+                torch.float32 if (self.using_cuda or self.using_mps) else torch.float64
+            )
+            # if self.using_cuda or self.using_mps:
+            #     dtype = torch.float32
+            # else:
+            #     dtype = torch.float64
 
         tensor = torch.from_numpy(array).to(dtype)
         return tensor.to(self.device)
@@ -102,7 +124,9 @@ class DeviceManager:
             return np.zeros(shape)
 
         if dtype is None:
-            dtype = torch.float32 if self.using_cuda else torch.float64
+            dtype = (
+                torch.float32 if (self.using_cuda or self.using_mps) else torch.float64
+            )
 
         return torch.zeros(shape, dtype=dtype, device=self.device)
 
@@ -112,8 +136,9 @@ class DeviceManager:
             return np.ones(shape)
 
         if dtype is None:
-            dtype = torch.float32 if self.using_cuda else torch.float64
-
+            dtype = (
+                torch.float32 if (self.using_cuda or self.using_mps) else torch.float64
+            )
         return torch.ones(shape, dtype=dtype, device=self.device)
 
     def randn(self, shape, dtype=None):
@@ -122,8 +147,9 @@ class DeviceManager:
             return np.random.randn(*shape)
 
         if dtype is None:
-            dtype = torch.float32 if self.using_cuda else torch.float64
-
+            dtype = (
+                torch.float32 if (self.using_cuda or self.using_mps) else torch.float64
+            )
         return torch.randn(shape, dtype=dtype, device=self.device)
 
     def sqrt(self, x):
